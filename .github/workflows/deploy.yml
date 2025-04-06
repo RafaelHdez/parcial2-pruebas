@@ -5,7 +5,6 @@ on:
     branches: [main]
 
 permissions:
-  contents: write
   pages: write
   id-token: write
 
@@ -15,14 +14,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: Setup Pages
+
+      - name: Configure GitHub Pages
         uses: actions/configure-pages@v3
 
-      - name: Upload artifact
+      - name: Upload files (Root directory)
         uses: actions/upload-pages-artifact@v2
         with:
-          path: '.'  # Punto (.) significa "raíz del repositorio"
+          path: '.'
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
