@@ -1,26 +1,28 @@
-name: Deploy GitHub Pages
+name: Deploy to GitHub Pages
+
 on:
- push:
- branches:
- - main
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
- deploy:
- runs-on: ubuntu-latest
- steps:
- - name: Checkout repository
- uses: actions/checkout@v3
- - name: Setup Node.js
- uses: actions/setup-node@v3
- with:
- node-version: '16'
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
 
- - name: Install dependencies and build
- run: |
- npm install
- npm run build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: '.'  # Punto (.) significa "raíz del repositorio"
 
- - name: Deploy to GitHub Pages
- uses: peaceiris/actions-gh-pages@v3
- with:
- github_token: ${{ secrets.GITHUB_TOKEN }}
- publish_dir: ./dist
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
